@@ -13,8 +13,10 @@ namespace Entities
 
 
     [RequireComponent(typeof(Rigidbody))]
+    // [RequireComponent(typeof(Animator))]
     public class PlayerView: MonoBehaviour, IPlayerView
     {
+        [SerializeField] private Animator _anim;
         public CharacterModel.MOVING Moving { get; set; }
         public Vector3 Position 
         {
@@ -33,13 +35,14 @@ namespace Entities
 
             _rb = GetComponent<Rigidbody>();
 
-            var p = new Player(new EntityPref("", Vector3.zero));
-            p._view = this;
+            // var p = new Player(this);
             
         }
 
         void Update()
         {
+
+            var v = _rb.velocity;
 
             var dt = Time.deltaTime;
             var moveX = new Vector2(Move.x * transform.right.x, Move.x * transform.right.z);
@@ -48,6 +51,12 @@ namespace Entities
 
             _rb.rotation *= Quaternion.Euler(0, Rotation.x * dt * 100, 0);
             _rb.velocity = new Vector3(vel.x, _rb.velocity.y, vel.y);
+
+            if (v != _rb.velocity)
+            {
+                // _anim.SetBool("IsMove", true);
+                Logger.Print("!!!!");
+            }
             
         }
 

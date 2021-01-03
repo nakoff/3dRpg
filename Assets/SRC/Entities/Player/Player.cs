@@ -7,18 +7,18 @@ namespace Entities
 {
     public class Player: BaseEntity
     {
-        public IPlayerView _view;
+        private IPlayerView _view;
         private CharacterModel _character;
 
-        public Player(EntityPref pref):base(ENTITY_TYPE.PLAYER)
+        public Player(IPlayerView view):base(ENTITY_TYPE.PLAYER)
         {
-            // var o = new Datas.CharacterObject(1,1,1);
-            // _view = EntityManager.CreateView<PlayerView>(pref.View);
-            // _view.Position = pref.Pos;
             Game.InputManager.changed += OnInputChanged;
 
             _character = CharacterModel.Create(Type, Id);
             _character.Subscribe(OnCharacterChanged);
+
+            _view = view;
+            _character.Position = _view.Position;
             
         }
 
@@ -47,16 +47,9 @@ namespace Entities
                     break;
 
                 case InputManager.ACTIONS.MOVE_Z:
-                    _view.Move = new Vector2(_view.Move.y, value);
+                    _view.Move = new Vector2(_view.Move.x, value);
                     break;
 
-                // case InputManager.ACTIONS.MOUSE_X:
-                //     _view.Rotation = new Vector2(value, _view.Rotation.y);
-                //     break;
-
-                // case InputManager.ACTIONS.MOUSE_Y:
-                //     _view.Rotation = new Vector2(_view.Rotation.x, value);
-                //     break;
             }
         }
 

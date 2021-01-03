@@ -76,7 +76,11 @@ namespace Entities
             return (err, entity);
         }
 
-
+        public static T CreateView<T>(string path) where T: class
+        {
+            var go = Instantiate(Resources.Load(path)) as GameObject;
+            return go.GetComponent<T>();
+        }
 
     }
 }

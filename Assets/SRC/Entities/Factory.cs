@@ -5,12 +5,10 @@ namespace Entities
 {
     public class EntityPref
     {
-        public string View;
         public Vector3 Pos;
 
-        public EntityPref(string view, Vector3 pos)
+        public EntityPref(Vector3 pos)
         {
-            View = view;
             Pos = pos;
         }
     }
@@ -19,13 +17,18 @@ namespace Entities
     {
         private static Dictionary<ENTITY_TYPE, System.Action<EntityPref>> _enitites = new Dictionary<ENTITY_TYPE, System.Action<EntityPref>>
         {
-            [ENTITY_TYPE.PLAYER] = pref => { var pres = new Player(pref); }
+            [ENTITY_TYPE.PLAYER] = pref => 
+            {
+                var view = EntityManager.CreateView<IPlayerView>("Prefabs/Player");   
+                Logger.Print(view.ToString());
+                var pres = new Player(view); 
+            }
         };
 
 
         public static void CreatePlayer(Vector3 pos)
         {
-            _enitites[ENTITY_TYPE.PLAYER](new EntityPref("res://Scenes/Entities/Player.tscn", pos));
+            _enitites[ENTITY_TYPE.PLAYER](new EntityPref(pos));
         }
     }
 }
