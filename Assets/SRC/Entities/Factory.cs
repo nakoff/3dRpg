@@ -20,8 +20,7 @@ namespace Entities
             [ENTITY_TYPE.PLAYER] = pref => 
             {
                 var view = EntityManager.CreateView<IPlayerView>("Prefabs/Player");   
-                Logger.Print(view.ToString());
-                var pres = new Player(view); 
+                // var pres = new Player(view); 
             }
         };
 

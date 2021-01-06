@@ -19,7 +19,18 @@ namespace Entities
 
             _view = view;
             _character.Position = _view.Position;
+            _view.Subscribe(OnViewChanged);
             
+        }
+
+        private void OnViewChanged(IPlayerView.CHANGED change)
+        {
+            switch (change)
+            {
+                case IPlayerView.CHANGED.POSITION:
+                    _character.Position = _view.Position;
+                    break;
+            }
         }
 
         private void OnCharacterChanged(int change)
@@ -33,7 +44,6 @@ namespace Entities
                     break;
                 
                 case CharacterModel.CHANGE.MOVING:
-                    _view.Moving = _character.Moving;
                     break;
             }
         }
@@ -42,14 +52,6 @@ namespace Entities
         {
             switch (key)
             {
-                case InputManager.ACTIONS.MOVE_X:
-                    // _view.Move = new Vector2(value, _view.Move.y);
-                    break;
-
-                case InputManager.ACTIONS.MOVE_Z:
-                    // _view.Move = new Vector2(_view.Move.x, value);
-                    break;
-
             }
         }
 

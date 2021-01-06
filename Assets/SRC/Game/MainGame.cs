@@ -19,7 +19,7 @@ namespace Game
 		private void Start()
 		{
 
-			EntityFactory.CreatePlayer(Vector3.up * 2);
+			// EntityFactory.CreatePlayer(Vector3.up * 2);
 		}
 
 		private void Update() 
