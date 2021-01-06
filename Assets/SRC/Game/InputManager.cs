@@ -30,8 +30,8 @@ namespace Game
         {
             CheckAction(ACTIONS.MOVE_X, (int)Input.GetAxisRaw("Horizontal"));
             CheckAction(ACTIONS.MOVE_Z, (int)Input.GetAxisRaw("Vertical"));
-            CheckAction(ACTIONS.MOUSE_X, Input.GetAxisRaw("Mouse X"));
-            CheckAction(ACTIONS.MOUSE_Y, Input.GetAxisRaw("Mouse Y"));
+            CheckAction(ACTIONS.MOUSE_X, Input.GetAxis("Mouse X"));
+            CheckAction(ACTIONS.MOUSE_Y, Input.GetAxis("Mouse Y"));
         }
 
         private static void CheckAction(ACTIONS action, float value, bool emit=false)
