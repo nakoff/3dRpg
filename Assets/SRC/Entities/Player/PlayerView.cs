@@ -7,8 +7,7 @@ namespace Entities
     {
         CharacterModel.MOVING Moving { get; set; }
         Vector3 Position { get; set; }
-        Vector2 Move { get; set; }
-        Vector2 Rotation { get; set; }
+        void Movement(Vector2 move, Vector2 rot, float dt);
     }
 
 
@@ -36,28 +35,32 @@ namespace Entities
             _rb = GetComponent<Rigidbody>();
 
             // var p = new Player(this);
+            Cursor.lockState = CursorLockMode.Locked;
             
         }
 
         void Update()
         {
+        }
+
+        public void Movement(Vector2 move, Vector2 rot, float dt)
+        {
 
             var v = _rb.velocity;
 
-            var dt = Time.deltaTime;
-            var moveX = new Vector2(Move.x * transform.right.x, Move.x * transform.right.z);
-            var moveZ = new Vector2(Move.y * transform.forward.x, Move.y * transform.forward.z);
+            var moveX = new Vector2(move.x * transform.right.x, move.x * transform.right.z);
+            var moveZ = new Vector2(move.y * transform.forward.x, move.y * transform.forward.z);
             var vel = (moveX + moveZ).normalized * Speed * dt;
 
-            _rb.rotation *= Quaternion.Euler(0, Rotation.x * dt * 100, 0);
+            _rb.rotation *= Quaternion.Euler(0, rot.x * dt * 100, 0);
             _rb.velocity = new Vector3(vel.x, _rb.velocity.y, vel.y);
 
             if (v != _rb.velocity)
             {
                 // _anim.SetBool("IsMove", true);
-                Logger.Print("!!!!");
             }
             
+
         }
 
     }

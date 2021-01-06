@@ -43,11 +43,11 @@ namespace Entities
             switch (key)
             {
                 case InputManager.ACTIONS.MOVE_X:
-                    _view.Move = new Vector2(value, _view.Move.y);
+                    // _view.Move = new Vector2(value, _view.Move.y);
                     break;
 
                 case InputManager.ACTIONS.MOVE_Z:
-                    _view.Move = new Vector2(_view.Move.x, value);
+                    // _view.Move = new Vector2(_view.Move.x, value);
                     break;
 
             }
@@ -55,9 +55,12 @@ namespace Entities
 
         public override void OnUpdate(float dt)
         {
-            var x = InputManager.GetValue(InputManager.ACTIONS.MOUSE_X);
-            var y = InputManager.GetValue(InputManager.ACTIONS.MOUSE_Y);
-            _view.Rotation = new Vector2(x, y);
+            var rotX = InputManager.GetValue(InputManager.ACTIONS.MOUSE_X);
+            var rotY = InputManager.GetValue(InputManager.ACTIONS.MOUSE_Y);
+            var moveX = InputManager.GetValue(InputManager.ACTIONS.MOVE_X);
+            var moveZ = InputManager.GetValue(InputManager.ACTIONS.MOVE_Z);
+
+            _view.Movement(new Vector2(moveX, moveZ), new Vector2(rotX, rotY), dt);
         }
 
 
