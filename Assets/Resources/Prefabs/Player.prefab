@@ -44,13 +44,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638058544565669423}
-  m_LocalRotation: {x: 0.16088156, y: -0, z: -0, w: 0.9869737}
-  m_LocalPosition: {x: 0, y: 1.763, z: -2.79}
+  m_LocalRotation: {x: 0.118607655, y: -0, z: -0, w: 0.9929412}
+  m_LocalPosition: {x: 0, y: 1.63, z: -2.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2582673002691661217}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 18.516, y: 0, z: 0}
+  m_Father: {fileID: 3982547845212767923}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 13.624, y: 0, z: 0}
 --- !u!20 &3016091176303803859
 Camera:
   m_ObjectHideFlags: 0
@@ -102,6 +102,37 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638058544565669423}
   m_Enabled: 1
+--- !u!1 &2937617693469238107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3982547845212767923}
+  m_Layer: 0
+  m_Name: CamPiv
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3982547845212767923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937617693469238107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1233644518960959517}
+  m_Father: {fileID: 2582673002691661217}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7017555502185848274
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1918011699583334403}
-  - {fileID: 1233644518960959517}
+  - {fileID: 3982547845212767923}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,7 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cafd327e7248eac44bc74c09ddee70df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anim: {fileID: 241035923653322192}
+  _animator: {fileID: 241035923653322192}
+  _camPiv: {fileID: 3982547845212767923}
   Speed: 100
 --- !u!54 &2177618225567707895
 Rigidbody:
@@ -289,13 +321,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ccd82aa6481f3650a7b345afe4ea598, type: 3}
---- !u!1 &1285203568525402809 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ccd82aa6481f3650a7b345afe4ea598, type: 3}
-  m_PrefabInstance: {fileID: 2095471284573462504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1918011699583334403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ccd82aa6481f3650a7b345afe4ea598, type: 3}
+  m_PrefabInstance: {fileID: 2095471284573462504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1285203568525402809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ccd82aa6481f3650a7b345afe4ea598, type: 3}
   m_PrefabInstance: {fileID: 2095471284573462504}
   m_PrefabAsset: {fileID: 0}

@@ -48,6 +48,15 @@ namespace Datas
                 obj.EmitEvent((int)CHANGE.HEALTH);
             }
         }
+        public int MoveSpeed 
+        {
+            get => obj.moveSpeed;
+            set
+            {
+                obj.moveSpeed = value;
+                // obj.EmitEvent((int)CHANGE.HEALTH);
+            }
+        }
 
     }
 }

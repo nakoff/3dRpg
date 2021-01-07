@@ -9,8 +9,6 @@ namespace Datas
     where TObject: IObject
     {
 
-        // public static OBJECT_TYPE Type { get; protected set;}
-
         public static TModel Create(OBJECT_TYPE type, Entities.ENTITY_TYPE parentType, uint parentId) 
         {
             var obj = (TObject)Activator.CreateInstance(typeof(TObject),(int)type, (int)parentType, parentId);
@@ -36,7 +34,6 @@ namespace Datas
             foreach (var obj in DataManager.GetObjects((int)type))
             {
                 var model = (TModel)Activator.CreateInstance(typeof(TModel), obj);
-                if (obj == null) { Logger.Error("can't to create model: " + typeof(TModel)); break; }
                 list.Add(model);
             }
 

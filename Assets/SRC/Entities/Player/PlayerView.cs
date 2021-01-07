@@ -8,8 +8,9 @@ namespace Entities
     {
         enum CHANGED { POSITION, };
         Vector3 Position { get; set; }
-        void Movement(Vector2 move, Vector2 rot, float dt);
         void Subscribe(System.Action<CHANGED> listener);
+        void Movement(Vector2 vector2, int moveSpeed, float dt);
+        void Rotate(Vector2 rotation, float dt);
     }
 
 
@@ -18,13 +19,13 @@ namespace Entities
     public class PlayerView: MonoBehaviour, IPlayerView
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _camPiv;
+
         public Vector3 Position 
         {
             get => gameObject.transform.position;
             set => gameObject.transform.position = value;
         }
-        public float Speed = 100;
-
         
         private System.Action<IPlayerView.CHANGED> change = delegate{};
         private Rigidbody _rb;
@@ -54,16 +55,24 @@ namespace Entities
             change = listener;
         }
 
-        public void Movement(Vector2 move, Vector2 rot, float dt)
-        {
 
+        private void ChangeAnimation(ANIMATION anim)
+        {
+            if (_curAnim == anim) 
+                return;
+            
+            _animator.Play(_animations[anim]);
+            _curAnim = anim;
+        }
+
+        public void Movement(Vector2 dir, int speed, float dt)
+        {
             var v = _rb.velocity;
 
-            var moveX = new Vector2(move.x * transform.right.x, move.x * transform.right.z);
-            var moveZ = new Vector2(move.y * transform.forward.x, move.y * transform.forward.z);
-            var vel = (moveX + moveZ).normalized * Speed * dt;
-
-            _rb.rotation *= Quaternion.Euler(0, rot.x * dt * 100, 0);
+            var moveX = new Vector2(dir.x * transform.right.x, dir.x * transform.right.z);
+            var moveZ = new Vector2(dir.y * transform.forward.x, dir.y * transform.forward.z);
+            var vel = (moveX + moveZ).normalized * dt * speed;
+            
             _rb.velocity = new Vector3(vel.x, _rb.velocity.y, vel.y);
 
             if (Vector3.Dot(vel, _rb.velocity) > 0)
@@ -75,19 +84,13 @@ namespace Entities
             {
                 ChangeAnimation(ANIMATION.IDLE);
             }
-            
-
         }
 
-        private void ChangeAnimation(ANIMATION anim)
+        public void Rotate(Vector2 rot, float dt)
         {
-            if (_curAnim == anim) 
-                return;
-            
-            _animator.Play(_animations[anim]);
-            _curAnim = anim;
+            _camPiv.transform.localRotation = Quaternion.Euler(rot.x, 0, 0);
+            transform.localRotation = Quaternion.Euler(0, rot.y, 0);
         }
-
     }
 
 }
