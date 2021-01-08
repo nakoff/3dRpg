@@ -1,14 +1,16 @@
 using Datas;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entities
 {
     public interface IPlayerView
     {
-        CharacterModel.MOVING Moving { get; set; }
+        enum CHANGED { POSITION, };
         Vector3 Position { get; set; }
-        Vector2 Move { get; set; }
-        Vector2 Rotation { get; set; }
+        void Subscribe(System.Action<CHANGED> listener);
+        void Movement(Vector2 vector2, int moveSpeed, float dt);
+        void Rotate(Vector2 rotation, float dt);
     }
 
 
@@ -16,50 +18,79 @@ namespace Entities
     // [RequireComponent(typeof(Animator))]
     public class PlayerView: MonoBehaviour, IPlayerView
     {
-        [SerializeField] private Animator _anim;
-        public CharacterModel.MOVING Moving { get; set; }
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _camPiv;
+
         public Vector3 Position 
         {
             get => gameObject.transform.position;
             set => gameObject.transform.position = value;
         }
-        public Vector2 Rotation { get; set; } = Vector2.zero;
-
-        public Vector2 Move { get; set; }
-        public float Speed = 100;
-
+        
+        private System.Action<IPlayerView.CHANGED> change = delegate{};
         private Rigidbody _rb;
+        private Player _presenter;
+
+        private enum ANIMATION { RUN_FORWARD, IDLE, }
+        private ANIMATION _curAnim;
+        private Dictionary<ANIMATION,string> _animations = new Dictionary<ANIMATION, string>
+        {
+            [ANIMATION.IDLE] = "Standing Idle",
+            [ANIMATION.RUN_FORWARD] = "Standing Run Forward",
+        };
 
         void Start()
         {
 
             _rb = GetComponent<Rigidbody>();
 
-            // var p = new Player(this);
+            _presenter = new Player(this);
+            Cursor.lockState = CursorLockMode.Locked;
             
         }
 
-        void Update()
-        {
 
+        public void Subscribe(System.Action<IPlayerView.CHANGED> listener)
+        {
+            change = listener;
+        }
+
+
+        private void ChangeAnimation(ANIMATION anim)
+        {
+            if (_curAnim == anim) 
+                return;
+            
+            _animator.Play(_animations[anim]);
+            _curAnim = anim;
+        }
+
+        public void Movement(Vector2 dir, int speed, float dt)
+        {
             var v = _rb.velocity;
 
-            var dt = Time.deltaTime;
-            var moveX = new Vector2(Move.x * transform.right.x, Move.x * transform.right.z);
-            var moveZ = new Vector2(Move.y * transform.forward.x, Move.y * transform.forward.z);
-            var vel = (moveX + moveZ).normalized * Speed * dt;
-
-            _rb.rotation *= Quaternion.Euler(0, Rotation.x * dt * 100, 0);
+            var moveX = new Vector2(dir.x * transform.right.x, dir.x * transform.right.z);
+            var moveZ = new Vector2(dir.y * transform.forward.x, dir.y * transform.forward.z);
+            var vel = (moveX + moveZ).normalized * dt * speed;
+            
             _rb.velocity = new Vector3(vel.x, _rb.velocity.y, vel.y);
 
-            if (v != _rb.velocity)
+            if (Vector3.Dot(vel, _rb.velocity) > 0)
             {
-                // _anim.SetBool("IsMove", true);
-                Logger.Print("!!!!");
+                change(IPlayerView.CHANGED.POSITION);
+                ChangeAnimation(ANIMATION.RUN_FORWARD);
             }
-            
+            else
+            {
+                ChangeAnimation(ANIMATION.IDLE);
+            }
         }
 
+        public void Rotate(Vector2 rot, float dt)
+        {
+            _camPiv.transform.localRotation = Quaternion.Euler(rot.x, 0, 0);
+            transform.localRotation = Quaternion.Euler(0, rot.y, 0);
+        }
     }
 
 }

@@ -14,12 +14,15 @@ namespace Game
 		private void Awake() {
 			inputManager = gameObject.AddComponent<InputManager>();
 			entityManager = gameObject.AddComponent<EntityManager>();
+
+			var setting = Datas.InputSettingsModel.Create();
+			setting.MouseSens = 150;
 		}
 
 		private void Start()
 		{
 
-			EntityFactory.CreatePlayer(Vector3.up * 2);
+			// EntityFactory.CreatePlayer(Vector3.up * 2);
 		}
 
 		private void Update() 

@@ -1,7 +1,7 @@
 
 namespace Datas
 {
-    public class CharacterObject: IObject
+    public class InputSettingsObject: IObject
     {
         public event System.Action<int> update = delegate{};
         public void EmitEvent(int change) 
@@ -9,7 +9,7 @@ namespace Datas
             update(change); 
         }
 
-        public CharacterObject(int type, int parentType, uint parentId)
+        public InputSettingsObject(int type, int parentType, uint parentId) 
         {
             Type = type;
             Id = DataManager.IdIncrement;
@@ -22,12 +22,6 @@ namespace Datas
         public int ParentType { get; private set; }
         public uint ParentId { get; private set; }
 
-        public float posX;
-        public float posY;
-        public float posZ;
-        public int health = 100;
-        public int moveSpeed = 100;
-        public int moving;
-
+        public int mouseSens = 100;
     }
 }

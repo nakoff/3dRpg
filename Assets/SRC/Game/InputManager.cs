@@ -11,7 +11,7 @@ namespace Game
         public enum ACTIONS {UNKNOWN, MOVE_X, MOVE_Z, JUMP, ATTACK_LEFT, ATTACK_RIGHT, MOUSE_X, MOUSE_Y}
         public static System.Action<ACTIONS, int> changed = delegate {};
 
-        private static Dictionary<ACTIONS, int> _pressedActions = new Dictionary<ACTIONS, int>();
+        private static Dictionary<ACTIONS, float> _pressedActions = new Dictionary<ACTIONS, float>();
 
 
         private void Start() {
@@ -21,7 +21,7 @@ namespace Game
             }
         }
 
-        public static int GetValue(ACTIONS action)
+        public static float GetValue(ACTIONS action)
         {
             return _pressedActions[action];
         }
@@ -30,16 +30,17 @@ namespace Game
         {
             CheckAction(ACTIONS.MOVE_X, (int)Input.GetAxisRaw("Horizontal"));
             CheckAction(ACTIONS.MOVE_Z, (int)Input.GetAxisRaw("Vertical"));
-            CheckAction(ACTIONS.MOUSE_X, (int)Input.GetAxisRaw("Mouse X"));
-            CheckAction(ACTIONS.MOUSE_Y, (int)Input.GetAxisRaw("Mouse Y"));
+            CheckAction(ACTIONS.MOUSE_X, Input.GetAxis("Mouse X"));
+            CheckAction(ACTIONS.MOUSE_Y, Input.GetAxis("Mouse Y"));
         }
 
-        private static void CheckAction(ACTIONS action, int value)
+        private static void CheckAction(ACTIONS action, float value, bool emit=false)
         {
             if (_pressedActions[action] != value)
             {
                 _pressedActions[action] = value;
-                changed(action, value);
+                if (emit)
+                    changed(action, (int)value);
             }
         }
 
