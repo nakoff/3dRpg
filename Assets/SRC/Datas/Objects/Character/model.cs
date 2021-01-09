@@ -11,7 +11,7 @@ namespace Datas
         public static List<CharacterModel> GetAll() => GetAll(Type);
 
 
-        public enum CHANGE { HEALTH, POSITION, MOVING}
+        public enum CHANGE { HEALTH, POSITION, MOVING, ANIMATION, }
         public enum MOVING {STOP, LEFT, RIGHT}
         public uint Id => obj.Id;
 
@@ -55,6 +55,16 @@ namespace Datas
             {
                 obj.moveSpeed = value;
                 // obj.EmitEvent((int)CHANGE.HEALTH);
+            }
+        }
+
+        public string CurAnimation
+        {
+            get => obj.curAnimation;
+            set
+            {
+                obj.curAnimation = value;
+                obj.EmitEvent((int)CHANGE.ANIMATION);
             }
         }
 
