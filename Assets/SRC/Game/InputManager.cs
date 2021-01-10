@@ -8,7 +8,11 @@ namespace Game
     public class InputManager:MonoBehaviour 
     {
 
-        public enum ACTIONS {UNKNOWN, MOVE_X, MOVE_Z, JUMP, ATTACK_LEFT, ATTACK_RIGHT, MOUSE_X, MOUSE_Y}
+        public enum ACTIONS 
+        {
+            UNKNOWN, MOVE_X, MOVE_Z, JUMP, ATTACK_LEFT, ATTACK_RIGHT, MOUSE_X, MOUSE_Y,
+            SPECIAL,    
+        }
         public static System.Action<ACTIONS, int> changed = delegate {};
 
         private static Dictionary<ACTIONS, float> _pressedActions = new Dictionary<ACTIONS, float>();
@@ -32,6 +36,7 @@ namespace Game
             CheckAction(ACTIONS.MOVE_Z, (int)Input.GetAxisRaw("Vertical"));
             CheckAction(ACTIONS.MOUSE_X, Input.GetAxis("Mouse X"));
             CheckAction(ACTIONS.MOUSE_Y, Input.GetAxis("Mouse Y"));
+            CheckAction(ACTIONS.SPECIAL, (int)Input.GetAxisRaw("Special"));
         }
 
         private static void CheckAction(ACTIONS action, float value, bool emit=false)

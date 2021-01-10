@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Datas
 {
@@ -38,6 +39,23 @@ namespace Datas
             }
 
             return list;
+        }
+
+        public static TModel GetByParent(OBJECT_TYPE type, int parentType, uint parentId)
+        {
+            TModel model = null;
+            var objects = DataManager.GetObjects((int)type);
+            // objects =  (from obj in objects where obj.ParentType == parentType && obj.ParentId == parentId select obj).ToList();
+            foreach (var obj in objects)
+            {
+                if (obj.ParentType == parentType && obj.ParentId == parentId)
+                {
+                    model = (TModel)Activator.CreateInstance(typeof(TModel), obj);
+                    break;
+                }
+            }
+
+            return model;
         }
 
         protected virtual TObject obj {get;}

@@ -31,7 +31,7 @@ namespace Entities
                 Logger.Error("InputSettings is not exists");
 
             var animationManager = new AnimationManager(newAnim => _character.CurAnimation = newAnim);
-            _fsm = new PlayerFSM(animationManager);
+            _fsm = new PlayerFSM(animationManager, this);
             
         }
 
@@ -54,9 +54,6 @@ namespace Entities
                     break;
 
                 case CharacterModel.CHANGE.HEALTH:
-                    break;
-                
-                case CharacterModel.CHANGE.MOVING:
                     break;
                 
                 case CharacterModel.CHANGE.ANIMATION:
