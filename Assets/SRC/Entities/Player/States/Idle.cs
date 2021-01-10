@@ -1,6 +1,6 @@
 
 
-namespace Entities
+namespace Entities.PlayerState
 {
 
     public class StateIdle:IFSMState

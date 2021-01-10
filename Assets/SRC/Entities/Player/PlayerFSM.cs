@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Entities.PlayerState;
 
 namespace Entities
 {
@@ -13,7 +14,7 @@ namespace Entities
         public PlayerFSM(AnimationManager animationManager):base(animationManager)
         {
             AddState( new StateIdle(STATE.IDLE.ToString(), this, 1000) );
-            AddState( new StateWalk(STATE.WALK.ToString(), this, 50) );
+            AddState( new StateMovement(STATE.WALK.ToString(), this, 50) );
 
             AddAnimation(ANIMATION.IDLE, "Standing Idle");
             AddAnimation(ANIMATION.WALK_FW, "Standing Walk Forward");

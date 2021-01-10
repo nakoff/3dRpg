@@ -1,9 +1,9 @@
 
 
-namespace Entities
+namespace Entities.PlayerState
 {
 
-    public class StateWalk:IFSMState
+    public class StateMovement:IFSMState
     {
 
         public string Name { get; }
@@ -11,7 +11,7 @@ namespace Entities
 
         private PlayerFSM _fsm;
 
-        public StateWalk(string name, PlayerFSM fsm, int priority)
+        public StateMovement(string name, PlayerFSM fsm, int priority)
         {
             Name = name;
             _fsm = fsm;
