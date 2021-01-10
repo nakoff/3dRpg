@@ -8,6 +8,7 @@ namespace Entities
     {
 
         private Dictionary<string,IFSMState> _states = new Dictionary<string, IFSMState>();
+        private List<IFSMState> _sortStates = new List<IFSMState>();
         private IFSMState _curState;
         public AnimationManager Animation { get; }
 
@@ -19,6 +20,8 @@ namespace Entities
         protected void AddState(IFSMState state)
         {
             _states.Add(state.Name, state);
+            _sortStates.Clear();
+            _sortStates = (from s in _states orderby s.Value.Priority ascending select s.Value).ToList();
         }
 
         protected IFSMState GetState(string stateName)
@@ -50,6 +53,18 @@ namespace Entities
             _curState?.OnUpdate(dt);
         }
 
-        public abstract void CheckoutStates(float dt);
+        // public abstract void CheckoutStates(float dt);
+
+        public void CheckoutStates(float dt)
+        {
+            foreach (var state in _sortStates)
+            {
+                if (state.CanEnter())
+                {
+                    ChangeState(state.Name);
+                    break;
+                }
+            }
+        }
     }
 }

@@ -7,13 +7,20 @@ namespace Entities
     {
 
         public string Name { get; }
+        public int Priority { get; }
 
         private PlayerFSM _fsm;
 
-        public StateIdle(string name, PlayerFSM fsm)
+        public StateIdle(string name, PlayerFSM fsm, int priotity)
         {
             Name = name;
             _fsm = fsm;
+            Priority = priotity;
+        }
+
+        public bool CanEnter()
+        {
+            return true;
         }
 
         public void OnUpdate(float dt)

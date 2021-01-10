@@ -30,8 +30,8 @@ namespace Entities
             if (_inputSetting == null)
                 Logger.Error("InputSettings is not exists");
 
-            var animationSystem = new AnimationManager(newAnim => _character.CurAnimation = newAnim);
-            _fsm = new PlayerFSM(animationSystem);
+            var animationManager = new AnimationManager(newAnim => _character.CurAnimation = newAnim);
+            _fsm = new PlayerFSM(animationManager);
             
         }
 

@@ -7,27 +7,19 @@ namespace Entities
     {
 
         public enum STATE { IDLE, WALK, }
-        public enum ANIMATION { IDLE, WALK_FW, }
+        public enum ANIMATION { IDLE, WALK_FW, WALK_BW, WALK_LEFT, WALK_RIGHT, }
         
         
-        public PlayerFSM(AnimationManager animationSystem):base(animationSystem)
+        public PlayerFSM(AnimationManager animationManager):base(animationManager)
         {
-            AddState( new StateIdle(STATE.IDLE.ToString(), this) );
-            AddState( new StateWalk(STATE.WALK.ToString(), this) );
+            AddState( new StateIdle(STATE.IDLE.ToString(), this, 1000) );
+            AddState( new StateWalk(STATE.WALK.ToString(), this, 50) );
 
             AddAnimation(ANIMATION.IDLE, "Standing Idle");
-            AddAnimation(ANIMATION.WALK_FW, "Standing Run Forward");
-
-            ChangeState(STATE.IDLE);
-        }
-
-
-        public override void CheckoutStates(float dt)
-        {
-            if (CheckWalk()){
-                ChangeState(STATE.WALK);
-                return;
-            }
+            AddAnimation(ANIMATION.WALK_FW, "Standing Walk Forward");
+            AddAnimation(ANIMATION.WALK_BW, "Standing Walk Back");
+            AddAnimation(ANIMATION.WALK_LEFT, "Standing Walk Left");
+            AddAnimation(ANIMATION.WALK_RIGHT, "Standing Walk Right");
 
             ChangeState(STATE.IDLE);
         }
@@ -35,17 +27,6 @@ namespace Entities
         public void ChangeState(STATE state) => ChangeState(state.ToString());
         private void AddAnimation(ANIMATION animName, string animation) => Animation.AddAnimation(animName.ToString(), animation);
         public void ChangeAnimation(ANIMATION animName) => Animation.ChangeAnimation(animName.ToString());
-
-        private bool CheckWalk()
-        {
-            if (Game.InputManager.GetValue(Game.InputManager.ACTIONS.MOVE_X) != 0
-            || Game.InputManager.GetValue(Game.InputManager.ACTIONS.MOVE_Z) != 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
 
     }
 
