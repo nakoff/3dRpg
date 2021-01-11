@@ -37,6 +37,8 @@ namespace Game
             CheckAction(ACTIONS.MOUSE_X, Input.GetAxis("Mouse X"));
             CheckAction(ACTIONS.MOUSE_Y, Input.GetAxis("Mouse Y"));
             CheckAction(ACTIONS.SPECIAL, (int)Input.GetAxisRaw("Special"));
+            CheckAction(ACTIONS.ATTACK_LEFT, (int)Input.GetAxisRaw("Fire1"));
+            CheckAction(ACTIONS.ATTACK_RIGHT, (int)Input.GetAxisRaw("Fire2"));
         }
 
         private static void CheckAction(ACTIONS action, float value, bool emit=false)

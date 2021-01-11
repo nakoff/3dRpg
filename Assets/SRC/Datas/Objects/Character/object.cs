@@ -28,6 +28,7 @@ namespace Datas
         public int health = 100;
         public int moveSpeed = 100;
         public string curAnimation;
+        public int curState;
 
     }
 }

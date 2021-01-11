@@ -20,7 +20,7 @@ public class AnimationManager
     [Test]
     public void AddAnimation()
     {
-        var am = new Entities.AnimationManager(anim => {});
+        var am = new Entities.AnimationManager();
         am.AddAnimation("one", "anim_one");
         am.AddAnimation("two", "anim_two");
 
@@ -31,7 +31,7 @@ public class AnimationManager
     public void AmimationChangeCallback()
     {
         var curAnim = "";
-        var am = new Entities.AnimationManager(anim => curAnim = anim);
+        var am = new Entities.AnimationManager();
         am.AddAnimation("two", "two");
         am.ChangeAnimation("two");
 

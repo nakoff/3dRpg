@@ -8,10 +8,11 @@ namespace Entities
     {
 
         public Player player { get; }
-        public enum STATE { IDLE, WALK, }
+        public enum STATE { IDLE, WALK, ATTACK, }
         public enum ANIMATION { 
             IDLE, WALK_FW, WALK_BW, WALK_LEFT, WALK_RIGHT, 
             RUN_FW, RUN_BW, RUN_LEFT, RUN_RIGHT,
+            ATTACK_FIREBALL_BIG, ATTACK_FIREBALL_SMALL, ATTACK_SPELL_GROUND,
         }
         
         
@@ -19,8 +20,9 @@ namespace Entities
         {
             this.player = player;
 
-            AddState( new StateIdle(STATE.IDLE.ToString(), this, 1000) );
+            AddState( new StateAttack(STATE.ATTACK.ToString(), this, 40) );
             AddState( new StateMovement(STATE.WALK.ToString(), this, 50) );
+            AddState( new StateIdle(STATE.IDLE.ToString(), this, 1000) );
 
             AddAnimation(ANIMATION.IDLE, "Standing Idle");
             AddAnimation(ANIMATION.WALK_FW, "Standing Walk Forward");
@@ -31,12 +33,16 @@ namespace Entities
             AddAnimation(ANIMATION.RUN_BW, "Standing Run Back");
             AddAnimation(ANIMATION.RUN_LEFT, "Standing Run Left");
             AddAnimation(ANIMATION.RUN_RIGHT, "Standing Run Right");
+            AddAnimation(ANIMATION.ATTACK_FIREBALL_BIG, "Standing 1H Magic Attack 01");
+            AddAnimation(ANIMATION.ATTACK_FIREBALL_SMALL, "Standing 2H Magic Attack 01");
+            AddAnimation(ANIMATION.ATTACK_SPELL_GROUND, "Standing 2H Cast Spell 01");
 
             ChangeState(STATE.IDLE);
         }
 
         public void ChangeState(STATE state) => ChangeState(state.ToString());
-        private void AddAnimation(ANIMATION animName, string animation) => Animation.AddAnimation(animName.ToString(), animation);
+        private void AddAnimation(ANIMATION anim, string animation) => Animation.AddAnimation(anim.ToString(), animation);
+        public string GetAnimation(ANIMATION anim) => Animation.GetAnimation(anim.ToString());
         public void ChangeAnimation(ANIMATION animName) => Animation.ChangeAnimation(animName.ToString());
 
     }

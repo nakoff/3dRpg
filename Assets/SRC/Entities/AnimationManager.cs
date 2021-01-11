@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 
@@ -7,48 +8,52 @@ namespace Entities
     public class AnimationManager
     {
 
-        private System.Action<string> animationChanged = delegate{};
-        private string _curAnim;
+        public System.Action changed = delegate{};
+        public System.Action finished = delegate{};
+        public string CurAnimationKey;
+
         private Dictionary<string,string> _animations = new Dictionary<string, string>();
 
-        public AnimationManager(System.Action<string> listener)
+
+        public AnimationManager()
         {
-            animationChanged = listener;
+
         }
 
-        public void AddAnimation(string name, string animation)
+        public void AddAnimation(string key, string animation)
         {
-            if (_animations.ContainsKey(name))
+            if (_animations.ContainsKey(key))
             {
-                Logger.Error("Animation: "+name+" already is exists");
+                Logger.Error("Animation: "+key+" already is exists");
                 return;
             }
 
-            _animations.Add(name, animation);
+            _animations.Add(key, animation);
         }
 
-        public string GetAnimation(string name)
+        public string GetAnimation(string key)
         {
-            if (!_animations.ContainsKey(name))
+            if (!_animations.ContainsKey(key))
             {
-                Logger.Error("Animation: "+name+" is not exists");
+                Logger.Error("Animation: "+key+" is not exists");
                 return null;
             }
 
-            return _animations[name];
+            return _animations[key];
         }
 
-        public void ChangeAnimation(string newAnim)
+        public void ChangeAnimation(string newAnimKey)
         {
-            if (_curAnim == newAnim)
+            if (CurAnimationKey == newAnimKey)
                 return;
             
-            _curAnim = newAnim;
-            var anim = GetAnimation(_curAnim);
+            CurAnimationKey = newAnimKey;
+            var anim = GetAnimation(CurAnimationKey);
             if (anim != null)
-                animationChanged(anim);
+                changed();
         }
 
+        internal void OnAnimationFinished() => finished();
     }
 
 }

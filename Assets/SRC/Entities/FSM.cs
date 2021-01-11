@@ -42,6 +42,8 @@ namespace Entities
             _curState = GetState(stateName);
             _curState?.OnEnter();
 
+            Logger.Print("STATE: "+ stateName);
+
             if (_curState == null)
                 Logger.Error("FSM State: "+stateName+" not found");
         }

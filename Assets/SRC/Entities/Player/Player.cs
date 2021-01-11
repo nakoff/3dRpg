@@ -11,6 +11,7 @@ namespace Entities
         private IAnimatedView _playerAnim;
         private CharacterModel _character;
         private InputSettingsModel _inputSetting;
+        private AnimationManager _animManager;
         private FSM _fsm;
 
         private Vector2 _rotation;
@@ -23,6 +24,14 @@ namespace Entities
 
             _view = view;
             _playerAnim = playerAnim;
+            _playerAnim.Subscribe(change =>
+            {
+                if (change == IAnimatedView.CHANGED.ANIMATION_FINISHED)
+                {
+                    _animManager?.OnAnimationFinished();
+                }
+            });
+
             _character.Position = _view.Position;
             _view.Subscribe(OnViewChanged);
 
@@ -30,11 +39,15 @@ namespace Entities
             if (_inputSetting == null)
                 Logger.Error("InputSettings is not exists");
 
-            var animationManager = new AnimationManager(newAnim => _character.CurAnimation = newAnim);
-            _fsm = new PlayerFSM(animationManager, this);
+            _animManager = new AnimationManager();
+            _animManager.changed += OnAnimationManagerChanged;
+
+            _fsm = new PlayerFSM(_animManager, this);
             
         }
 
+
+        private void OnAnimationManagerChanged() => _character.CurAnimation = _animManager.GetAnimation(_animManager.CurAnimationKey); 
 
         private void OnViewChanged(IPlayerView.CHANGED change)
         {
@@ -45,6 +58,7 @@ namespace Entities
                     break;
             }
         }
+
 
         private void OnCharacterChanged(int change)
         {
@@ -81,6 +95,7 @@ namespace Entities
         public override void OnDelete()
         {
             _character.UnSubscribes();
+            _animManager.changed -= OnAnimationManagerChanged;
         }
     }
 }
