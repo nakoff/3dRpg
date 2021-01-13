@@ -12,7 +12,7 @@ namespace Entities.PlayerState
         private PlayerFSM _fsm;
         private Datas.CharacterModel _character;
         private PlayerFSM.ANIMATION _curAnim;
-        public bool _isAnimationPlaying;
+        private bool _isAnimationPlaying;
 
         public StateAttack(string name, PlayerFSM fsm, int priotity)
         {
@@ -36,6 +36,14 @@ namespace Entities.PlayerState
             return false;
         }
 
+
+        public void OnEnter()
+        {
+            _curAnim = PlayerFSM.ANIMATION.IDLE;
+            _fsm.Animation.finished += OnAnimationFinished;
+        }
+
+
         public void OnUpdate(float dt)
         {
             var attack1 = Game.InputManager.GetValue(Game.InputManager.ACTIONS.ATTACK_LEFT);
@@ -57,16 +65,12 @@ namespace Entities.PlayerState
             _fsm.ChangeAnimation(_curAnim);
         }
 
-        public void OnEnter()
-        {
-            _curAnim = PlayerFSM.ANIMATION.IDLE;
-            _fsm.Animation.finished += OnAnimationFinished;
-        }
 
         public void OnExit()
         {
             _fsm.Animation.finished -= OnAnimationFinished;
         }
+
 
         private void FireballBig()
         {

@@ -42,14 +42,14 @@ namespace Entities
             return _animations[key];
         }
 
-        public void ChangeAnimation(string newAnimKey)
+        public void ChangeAnimation(string key)
         {
-            if (CurAnimationKey == newAnimKey)
+            if (CurAnimationKey == key)
                 return;
             
-            CurAnimationKey = newAnimKey;
-            var anim = GetAnimation(CurAnimationKey);
-            if (anim != null)
+            CurAnimationKey = key;
+            var animation = GetAnimation(CurAnimationKey);
+            if (animation != null)
                 changed();
         }
 

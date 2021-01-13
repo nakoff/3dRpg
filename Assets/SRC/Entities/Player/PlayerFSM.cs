@@ -9,6 +9,8 @@ namespace Entities
 
         public Player player { get; }
         public enum STATE { IDLE, WALK, ATTACK, }
+
+        public AnimationController Animation { get; }
         public enum ANIMATION { 
             IDLE, WALK_FW, WALK_BW, WALK_LEFT, WALK_RIGHT, 
             RUN_FW, RUN_BW, RUN_LEFT, RUN_RIGHT,
@@ -16,8 +18,9 @@ namespace Entities
         }
         
         
-        public PlayerFSM(AnimationController animationManager, Player player):base(animationManager)
+        public PlayerFSM(AnimationController animationController, Player player):base()
         {
+            Animation = animationController;
             this.player = player;
 
             AddState( new StateAttack(STATE.ATTACK.ToString(), this, 40) );
@@ -41,9 +44,9 @@ namespace Entities
         }
 
         public void ChangeState(STATE state) => ChangeState(state.ToString());
-        private void AddAnimation(ANIMATION anim, string animation) => Animation.AddAnimation(anim.ToString(), animation);
-        public string GetAnimation(ANIMATION anim) => Animation.GetAnimation(anim.ToString());
-        public void ChangeAnimation(ANIMATION animName) => Animation.ChangeAnimation(animName.ToString());
+        private void AddAnimation(ANIMATION key, string animation) => Animation.AddAnimation(key.ToString(), animation);
+        public string GetAnimation(ANIMATION key) => Animation.GetAnimation(key.ToString());
+        public void ChangeAnimation(ANIMATION key) => Animation.ChangeAnimation(key.ToString());
 
     }
 

@@ -11,7 +11,7 @@ namespace Entities
         private IAnimatedView _playerAnim;
         private CharacterModel _character;
         private InputSettingsModel _inputSetting;
-        private AnimationController _animManager;
+        private AnimationController _animController;
         private FSM _fsm;
 
         private Vector2 _rotation;
@@ -27,9 +27,7 @@ namespace Entities
             _playerAnim.Subscribe(change =>
             {
                 if (change == IAnimatedView.CHANGED.ANIMATION_FINISHED)
-                {
-                    _animManager?.OnAnimationFinished();
-                }
+                    _animController?.OnAnimationFinished();
             });
 
             _character.Position = _view.Position;
@@ -39,15 +37,15 @@ namespace Entities
             if (_inputSetting == null)
                 Logger.Error("InputSettings is not exists");
 
-            _animManager = new AnimationController();
-            _animManager.changed += OnAnimationManagerChanged;
+            _animController = new AnimationController();
+            _animController.changed += OnAnimationConttollerChanged;
 
-            _fsm = new PlayerFSM(_animManager, this);
+            _fsm = new PlayerFSM(_animController, this);
             
         }
 
 
-        private void OnAnimationManagerChanged() => _character.CurAnimation = _animManager.GetAnimation(_animManager.CurAnimationKey); 
+        private void OnAnimationConttollerChanged() => _character.CurAnimation = _animController.GetAnimation(_animController.CurAnimationKey); 
 
         private void OnViewChanged(IPlayerView.CHANGED change)
         {
@@ -95,7 +93,7 @@ namespace Entities
         public override void OnDelete()
         {
             _character.UnSubscribes();
-            _animManager.changed -= OnAnimationManagerChanged;
+            _animController.changed -= OnAnimationConttollerChanged;
         }
     }
 }
