@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Entities
 {
 
-    public class AnimationManager
+    public class AnimationController
     {
 
         public System.Action changed = delegate{};
@@ -15,7 +15,7 @@ namespace Entities
         private Dictionary<string,string> _animations = new Dictionary<string, string>();
 
 
-        public AnimationManager()
+        public AnimationController()
         {
 
         }

@@ -10,9 +10,9 @@ namespace Entities
         private Dictionary<string,IFSMState> _states = new Dictionary<string, IFSMState>();
         private List<IFSMState> _sortStates = new List<IFSMState>();
         private IFSMState _curState;
-        public AnimationManager Animation { get; }
+        public AnimationController Animation { get; }
 
-        public FSM(AnimationManager animationManager)
+        public FSM(AnimationController animationManager)
         {
             Animation = animationManager;
         }

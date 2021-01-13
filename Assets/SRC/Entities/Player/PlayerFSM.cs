@@ -16,7 +16,7 @@ namespace Entities
         }
         
         
-        public PlayerFSM(AnimationManager animationManager, Player player):base(animationManager)
+        public PlayerFSM(AnimationController animationManager, Player player):base(animationManager)
         {
             this.player = player;
 

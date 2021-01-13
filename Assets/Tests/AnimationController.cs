@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class AnimationManager
+public class AnimationController
 {
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
@@ -20,7 +20,7 @@ public class AnimationManager
     [Test]
     public void AddAnimation()
     {
-        var am = new Entities.AnimationManager();
+        var am = new Entities.AnimationController();
         am.AddAnimation("one", "anim_one");
         am.AddAnimation("two", "anim_two");
 
@@ -31,7 +31,7 @@ public class AnimationManager
     public void AmimationChangeCallback()
     {
         var curAnim = "";
-        var am = new Entities.AnimationManager();
+        var am = new Entities.AnimationController();
         am.AddAnimation("two", "two");
         am.ChangeAnimation("two");
 

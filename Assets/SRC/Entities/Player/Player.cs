@@ -11,7 +11,7 @@ namespace Entities
         private IAnimatedView _playerAnim;
         private CharacterModel _character;
         private InputSettingsModel _inputSetting;
-        private AnimationManager _animManager;
+        private AnimationController _animManager;
         private FSM _fsm;
 
         private Vector2 _rotation;
@@ -39,7 +39,7 @@ namespace Entities
             if (_inputSetting == null)
                 Logger.Error("InputSettings is not exists");
 
-            _animManager = new AnimationManager();
+            _animManager = new AnimationController();
             _animManager.changed += OnAnimationManagerChanged;
 
             _fsm = new PlayerFSM(_animManager, this);
