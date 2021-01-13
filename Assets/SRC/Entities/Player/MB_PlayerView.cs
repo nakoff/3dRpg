@@ -19,6 +19,7 @@ namespace Entities
     {
         [SerializeField] private MB_PlayerAnim _playerAnim;
         [SerializeField] private Transform _camPiv;
+        [SerializeField] private Transform _fistPiv;
 
         public Vector3 Position 
         {
