@@ -25,6 +25,14 @@ namespace Datas
         public float posX;
         public float posY;
         public float posZ;
+
+        public float moveX;
+        public float moveY;
+        public float moveZ;
+
+        public float rotX;
+        public float rotY;
+
         public int health = 100;
         public int moveSpeed = 100;
         public string curAnimation;

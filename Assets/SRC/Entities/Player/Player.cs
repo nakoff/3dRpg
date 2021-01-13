@@ -14,7 +14,6 @@ namespace Entities
         private AnimationController _animController;
         private FSM _fsm;
 
-        private Vector2 _rotation;
 
         public Player(IPlayerView view, IAnimatedView playerAnim):base(ENTITY_TYPE.PLAYER)
         {
@@ -33,9 +32,7 @@ namespace Entities
             _character.Position = _view.Position;
             _view.Subscribe(OnViewChanged);
 
-            _inputSetting = InputSettingsModel.Get();
-            if (_inputSetting == null)
-                Logger.Error("InputSettings is not exists");
+            
 
             _animController = new AnimationController();
             _animController.changed += OnAnimationConttollerChanged;
@@ -76,15 +73,8 @@ namespace Entities
 
         public override void OnUpdate(float dt)
         {
-            _rotation.y += InputManager.GetValue(InputManager.ACTIONS.MOUSE_X) * _inputSetting.MouseSens * dt;
-            _rotation.x -= InputManager.GetValue(InputManager.ACTIONS.MOUSE_Y) * _inputSetting.MouseSens * dt;
-            _rotation.x = Mathf.Clamp(_rotation.x, -90, 90);
-
-            var moveX = InputManager.GetValue(InputManager.ACTIONS.MOVE_X);
-            var moveZ = InputManager.GetValue(InputManager.ACTIONS.MOVE_Z);
-
-            _view.Movement(new Vector2(moveX, moveZ), _character.MoveSpeed, dt);
-            _view.Rotate(_rotation, dt);
+            _view.Movement(new Vector2(_character.Moving.x, _character.Moving.z), _character.MoveSpeed, dt);
+            _view.Rotate(_character.Rotation, dt);
 
             _fsm.Update(dt);
         }

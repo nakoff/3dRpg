@@ -12,7 +12,7 @@ namespace Datas
         public static CharacterModel GetByParent(Entities.ENTITY_TYPE parentType, uint parentId) => GetByParent(Type, (int)parentType, parentId);
 
 
-        public enum CHANGE { HEALTH, POSITION, ANIMATION, STATE }
+        public enum CHANGE { HEALTH, POSITION, ANIMATION, STATE, MOVING, ROTATION, }
         public enum MOVING {STOP, LEFT, RIGHT}
         public uint Id => obj.Id;
 
@@ -76,6 +76,33 @@ namespace Datas
                     return;
                 obj.curState = value;
                 obj.EmitEvent((int)CHANGE.STATE);
+            }
+        }
+
+        public Vector3 Moving
+        {
+            get => new Vector3(obj.moveX, obj.moveY, obj.moveZ);
+            set
+            {
+                if (Moving == value)
+                    return;
+                obj.moveX = value.x;
+                obj.moveY = value.y;
+                obj.moveZ = value.z;
+                // obj.EmitEvent((int)CHANGE.MOVING);
+            }
+        }
+
+        public Vector2 Rotation
+        {
+            get => new Vector2(obj.rotX, obj.rotY);
+            set
+            {
+                if (Rotation == value)
+                    return;
+                obj.rotX = value.x;
+                obj.rotY = value.y;
+                // obj.EmitEvent((int)CHANGE.ROTATION);
             }
         }
 
