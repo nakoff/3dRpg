@@ -11,7 +11,7 @@ namespace Entities.PlayerState
 
         private PlayerFSM _fsm;
         private Datas.CharacterModel _character;
-        private PlayerFSM.ANIMATION _curAnim;
+        private PlayerConst.ANIMATION _curAnim;
         private bool _isAnimationPlaying;
 
         public StateAttack(string name, PlayerFSM fsm, int priotity)
@@ -39,8 +39,8 @@ namespace Entities.PlayerState
 
         public void OnEnter()
         {
-            _curAnim = PlayerFSM.ANIMATION.IDLE;
-            _fsm.Animation.finished += OnAnimationFinished;
+            _curAnim = PlayerConst.ANIMATION.IDLE;
+            _fsm.animationFinished += OnAnimationFinished;
         }
 
 
@@ -68,27 +68,27 @@ namespace Entities.PlayerState
 
         public void OnExit()
         {
-            _fsm.Animation.finished -= OnAnimationFinished;
+            _fsm.animationFinished -= OnAnimationFinished;
         }
 
 
         private void FireballBig()
         {
             _isAnimationPlaying = true;
-            _curAnim = PlayerFSM.ANIMATION.ATTACK_FIREBALL_BIG;
+            _curAnim = PlayerConst.ANIMATION.ATTACK_FIREBALL_BIG;
 
         }
         
         private void FireballSmall()
         {
             _isAnimationPlaying = true;
-            _curAnim = PlayerFSM.ANIMATION.ATTACK_FIREBALL_SMALL;
+            _curAnim = PlayerConst.ANIMATION.ATTACK_FIREBALL_SMALL;
 
         }
 
         private void OnAnimationFinished()
         {
-            if (_fsm.Animation.CurAnimationKey == _curAnim.ToString())
+            if (_fsm.CurAnimation == _curAnim)
             {
                 _isAnimationPlaying = false;
                 Logger.Print("Attack Finished");

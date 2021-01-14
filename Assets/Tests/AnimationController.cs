@@ -17,24 +17,24 @@ public class AnimationController
     //     yield return null;
     // }
 
-    [Test]
-    public void AddAnimation()
-    {
-        var am = new Entities.AnimationController();
-        am.AddAnimation("one", "anim_one");
-        am.AddAnimation("two", "anim_two");
+    // [Test]
+    // public void AddAnimation()
+    // {
+    //     var am = new Entities.AnimationController();
+    //     am.AddAnimation("one", "anim_one");
+    //     am.AddAnimation("two", "anim_two");
 
-        Assert.IsTrue(am.GetAnimation("one") == "anim_one");
-    }
+    //     Assert.IsTrue(am.GetAnimation("one") == "anim_one");
+    // }
 
-    [Test]
-    public void AmimationChangeCallback()
-    {
-        var curAnim = "";
-        var am = new Entities.AnimationController();
-        am.AddAnimation("two", "two");
-        am.ChangeAnimation("two");
+    // [Test]
+    // public void AmimationChangeCallback()
+    // {
+    //     var curAnim = "";
+    //     var am = new Entities.AnimationController();
+    //     am.AddAnimation("two", "two");
+    //     am.ChangeAnimation("two");
 
-        Assert.IsTrue(curAnim == "two");
-    }
+    //     Assert.IsTrue(curAnim == "two");
+    // }
 }

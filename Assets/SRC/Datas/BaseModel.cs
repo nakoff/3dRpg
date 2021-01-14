@@ -58,7 +58,7 @@ namespace Datas
             return model;
         }
 
-        protected virtual TObject obj {get;}
+        public virtual TObject obj {get;}
 
         private BaseModel(){}
         protected BaseModel(IObject obj)

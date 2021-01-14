@@ -43,7 +43,7 @@ namespace Entities.PlayerState
 
         public void OnEnter()
         {
-            _fsm.ChangeAnimation(PlayerFSM.ANIMATION.IDLE);
+            _fsm.ChangeAnimation(PlayerConst.ANIMATION.IDLE);
             _rotation = _character.Rotation;
         }
 

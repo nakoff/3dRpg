@@ -11,13 +11,14 @@ namespace Entities
         void Subscribe(System.Action<CHANGED> listener);
         void Movement(Vector2 vector2, int moveSpeed, float dt);
         void Rotate(Vector2 rotation, float dt);
+        AnimController CreateAnimController(AnimStateObject animStateObject);
     }
 
 
     [RequireComponent(typeof(Rigidbody))]
     public class MB_PlayerView: MonoBehaviour, IPlayerView
     {
-        [SerializeField] private MB_PlayerAnim _playerAnim;
+        [SerializeField] private Animator _animator;
         [SerializeField] private Transform _camPiv;
         [SerializeField] private Transform _fistPiv;
 
@@ -30,6 +31,7 @@ namespace Entities
         private System.Action<IPlayerView.CHANGED> change = delegate{};
         private Rigidbody _rb;
         private Player _presenter;
+        private AnimController _animController;
 
 
         void Start()
@@ -37,9 +39,14 @@ namespace Entities
 
             _rb = GetComponent<Rigidbody>();
 
-            _presenter = new Player(this, _playerAnim);
+            _presenter = new Player(this);
             Cursor.lockState = CursorLockMode.Locked;
             
+        }
+
+        public AnimController CreateAnimController(AnimStateObject obj)
+        {
+            return new AnimController(_animator, obj);
         }
 
 
