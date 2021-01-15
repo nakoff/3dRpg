@@ -13,7 +13,7 @@ namespace Entities
         private InputSettingsModel _inputSetting;
         private AnimStateModel _animState;
         private AnimController _animController;
-        private FSM _fsm;
+        private PlayerFSM _fsm;
 
 
         public Player(IPlayerView view):base(ENTITY_TYPE.PLAYER)
@@ -42,7 +42,7 @@ namespace Entities
             AddAnimation(PlayerConst.ANIMATION.ATTACK_FIREBALL_SMALL, "Standing 2H Magic Attack 01");
             AddAnimation(PlayerConst.ANIMATION.ATTACK_SPELL_GROUND, "Standing 2H Cast Spell 01");
 
-            _fsm = new PlayerFSM(this, _animState.obj);
+            _fsm = new PlayerFSM(this, _animState.obj, _character.obj);
             
         }
 
@@ -91,6 +91,7 @@ namespace Entities
         public override void OnDelete()
         {
             _character.UnSubscribes();
+            _fsm.OnDelete();
         }
     }
 }

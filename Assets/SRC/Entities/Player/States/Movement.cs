@@ -15,8 +15,6 @@ namespace Entities.PlayerState
         private PlayerFSM _fsm;
         private PlayerConst.ANIMATION _curAnim;
         private Datas.CharacterModel _character;
-        private Vector2 _rotation;
-        private InputSettingsModel _inputSetting;
 
         public StateMovement(string name, PlayerFSM fsm, int priority)
         {
@@ -24,13 +22,7 @@ namespace Entities.PlayerState
             _fsm = fsm;
             Priority = priority;
 
-            _character = Datas.CharacterModel.GetByParent(_fsm.player.Type, _fsm.player.Id);
-            if (_character == null)
-                Logger.Error("wrong model");
-            
-            _inputSetting = InputSettingsModel.Get();
-            if (_inputSetting == null)
-                Logger.Error("InputSettings is not exists");
+            _character = new CharacterModel(_fsm.charObj);
         }
 
         public bool CanEnter()
@@ -45,7 +37,6 @@ namespace Entities.PlayerState
         }
         public void OnEnter()
         {
-            _rotation = _character.Rotation;
         }
 
         public void OnUpdate(float dt)
@@ -59,10 +50,9 @@ namespace Entities.PlayerState
             else
                 Walk(moveX, moveZ);
 
-            
             _fsm.ChangeAnimation(_curAnim);
-            Move(dt);
-            Rot(dt);
+            _fsm.PlayerMove(dt);
+            _fsm.PlayerRot(dt);
         }
 
         public void OnExit()
@@ -91,23 +81,7 @@ namespace Entities.PlayerState
             _character.MoveSpeed = PlayerConst.RunSpeed;
         }
 
-        private void Move(float dt)
-        {
 
-            var moving = Vector3.zero;
-            moving.x = InputManager.GetValue(InputManager.ACTIONS.MOVE_X);
-            moving.z = InputManager.GetValue(InputManager.ACTIONS.MOVE_Z);
-
-            _character.Moving = moving;
-        }
-
-        private void Rot(float dt)
-        {
-            _rotation.y += InputManager.GetValue(InputManager.ACTIONS.MOUSE_X) * _inputSetting.MouseSens * dt;
-            _rotation.x -= InputManager.GetValue(InputManager.ACTIONS.MOUSE_Y) * _inputSetting.MouseSens * dt;
-            _rotation.x = Mathf.Clamp(_rotation.x, -90, 90);
-            _character.Rotation = _rotation;
-        }
 
     }
 }

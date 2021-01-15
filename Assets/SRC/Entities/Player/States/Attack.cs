@@ -20,9 +20,7 @@ namespace Entities.PlayerState
             _fsm = fsm;
             Priority = priotity;
 
-            _character = Datas.CharacterModel.GetByParent(_fsm.player.Type, _fsm.player.Id);
-            if (_character == null)
-                Logger.Error("wrong model");
+            _character = new Datas.CharacterModel(_fsm.charObj);
         }
 
         public bool CanEnter()
