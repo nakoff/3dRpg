@@ -49,7 +49,6 @@ namespace Entities.PlayerState
             var attack1 = Game.InputManager.GetValue(Game.InputManager.ACTIONS.ATTACK_LEFT);
             var attack2 = Game.InputManager.GetValue(Game.InputManager.ACTIONS.ATTACK_RIGHT);
             var spetial = Game.InputManager.GetValue(Game.InputManager.ACTIONS.SPECIAL);
-            var characterAnim = _character.CurAnimation;
             var characterState = (PlayerFSM.STATE)_character.CurState;
 
             
