@@ -60,6 +60,7 @@ namespace Entities.PlayerState
             }
 
             _fsm.ChangeAnimation(_curAnim);
+            _fsm.PlayerRot(dt);
         }
 
 

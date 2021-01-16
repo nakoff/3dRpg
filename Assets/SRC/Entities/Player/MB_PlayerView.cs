@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entities
 {
-    public interface IPlayerView
+    public interface IPlayerView:IInteractable
     {
         enum CHANGED { POSITION, };
         Vector3 Position { get; set; }
@@ -22,6 +22,9 @@ namespace Entities
         [SerializeField] private Transform _camPiv;
         [SerializeField] private Transform _fistPiv;
 
+        public ENTITY_TYPE EntityType { get; private set; }
+        public uint EntityId { get; private set; }
+
         public Vector3 Position 
         {
             get => gameObject.transform.position;
@@ -32,16 +35,21 @@ namespace Entities
         private Rigidbody _rb;
         private Player _presenter;
         private AnimController _animController;
+        private InteractController _interactController;
 
 
         void Start()
         {
-
             _rb = GetComponent<Rigidbody>();
-
             _presenter = new Player(this);
             Cursor.lockState = CursorLockMode.Locked;
-            
+        }
+
+        public void Init(ENTITY_TYPE type, uint id, InteractController interactController)
+        {
+            EntityType = type;
+            EntityId = id;
+            _interactController = interactController;
         }
 
         public AnimController CreateAnimController(AnimStateObject obj)
@@ -71,6 +79,10 @@ namespace Entities
         {
             _camPiv.transform.localRotation = Quaternion.Euler(rot.x, 0, 0);
             transform.localRotation = Quaternion.Euler(0, rot.y, 0);
+        }
+
+        private void OnCollisionEnter(Collision other) {
+           _interactController.OnCollisionEnter(other); 
         }
     }
 
