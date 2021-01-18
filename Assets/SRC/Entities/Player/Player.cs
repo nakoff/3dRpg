@@ -23,10 +23,10 @@ namespace Entities
             _character.Subscribe(OnCharacterChanged);
 
             var collState = InteractStateModel.Create(Type, Id);
-            var collController = new InteractController(collState.obj);
+            var interactController = new InteractController(collState.obj);
 
             _view = view;
-            _view.Init(Type, Id, collController);
+            _view.interactController = interactController;
             _character.Position = _view.Position;
             _view.Subscribe(OnViewChanged);
 

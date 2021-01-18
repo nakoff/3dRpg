@@ -22,8 +22,9 @@ namespace Entities
         [SerializeField] private Transform _camPiv;
         [SerializeField] private Transform _fistPiv;
 
-        public ENTITY_TYPE EntityType { get; private set; }
-        public uint EntityId { get; private set; }
+        public ENTITY_TYPE EntityType => _presenter.Type;
+        public uint EntityId => _presenter.Id;
+        public InteractController interactController { get; set; }
 
         public Vector3 Position 
         {
@@ -35,7 +36,6 @@ namespace Entities
         private Rigidbody _rb;
         private Player _presenter;
         private AnimController _animController;
-        private InteractController _interactController;
 
 
         void Start()
@@ -45,12 +45,6 @@ namespace Entities
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        public void Init(ENTITY_TYPE type, uint id, InteractController interactController)
-        {
-            EntityType = type;
-            EntityId = id;
-            _interactController = interactController;
-        }
 
         public AnimController CreateAnimController(AnimStateObject obj)
         {
@@ -82,7 +76,7 @@ namespace Entities
         }
 
         private void OnCollisionEnter(Collision other) {
-           _interactController.OnCollisionEnter(other); 
+           interactController.OnCollisionEnter(other); 
         }
     }
 

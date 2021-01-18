@@ -16,11 +16,23 @@ namespace Entities
 
         public void OnCollisionEnter(Collision col)
         {
-            if (col is IInteractable interactView)
-            {
-                var collired = new InteractStateModel.TargetEntity(interactView.EntityType, interactView.EntityId);
-                _interactState._InteractedWith(collired);
-            }
+            var interactView = col.gameObject.GetComponent<IInteractable>();
+            OnCollision(interactView);
+        }
+
+        public void OnCollisionEnter(Collider col)
+        {
+            var interactView = col.gameObject.GetComponent<IInteractable>();
+            OnCollision(interactView);
+        }
+
+        private void OnCollision(IInteractable targetView)
+        {
+            if (targetView == null)
+                return;
+
+            var target = new InteractStateModel.TargetEntity(targetView.EntityType, targetView.EntityId);
+            _interactState._InteractedWith(target);
         }
 
     }

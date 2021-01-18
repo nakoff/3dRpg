@@ -7,7 +7,7 @@ namespace Entities
     {
         ENTITY_TYPE EntityType { get;}
         uint EntityId { get; }
+        InteractController interactController { get; set; }
 
-        void Init(ENTITY_TYPE type, uint id, InteractController interactController);
     }
 }
