@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
-using Entities.PlayerState;
+using Entities.Player;
 using UnityEngine;
 using Game;
 using Datas;
 
-namespace Entities
+namespace Entities.Player
 {
 
     public class PlayerFSM:FSM
     {
 
-        public Player player { get; }
+        public PlayerPres player { get; }
         public CharacterObject charObj => _character.obj;
         public AnimStateObject animStateObj => _animState.obj;
         public enum STATE { IDLE, WALK, ATTACK, }
@@ -23,7 +23,7 @@ namespace Entities
         private InputSettingsModel _inputSetting;
         private Vector2 _playerRotation;
         
-        public PlayerFSM(Player player, AnimStateObject animObj, CharacterObject charObj):base()
+        public PlayerFSM(PlayerPres player, AnimStateObject animObj, CharacterObject charObj):base()
         {
             this.player = player;
             _character = new CharacterModel(charObj);
@@ -52,9 +52,9 @@ namespace Entities
             ChangeState(STATE.IDLE);
         }
 
-        public PlayerConst.ANIMATION CurAnimation => (PlayerConst.ANIMATION)_animState.CurAnimation;
+        public Const.ANIMATION CurAnimation => (Const.ANIMATION)_animState.CurAnimation;
         public void ChangeState(STATE state) => ChangeState(state.ToString());
-        public void ChangeAnimation(PlayerConst.ANIMATION key) => _animState.CurAnimation = (int)key;
+        public void ChangeAnimation(Const.ANIMATION key) => _animState.CurAnimation = (int)key;
 
         public void PlayerMove(float dt)
         {

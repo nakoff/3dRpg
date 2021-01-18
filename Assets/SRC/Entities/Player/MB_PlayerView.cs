@@ -2,7 +2,7 @@ using Datas;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Entities
+namespace Entities.Player
 {
     public interface IPlayerView:IInteractable
     {
@@ -34,14 +34,14 @@ namespace Entities
         
         private System.Action<IPlayerView.CHANGED> change = delegate{};
         private Rigidbody _rb;
-        private Player _presenter;
+        private PlayerPres _presenter;
         private AnimController _animController;
 
 
         void Start()
         {
             _rb = GetComponent<Rigidbody>();
-            _presenter = new Player(this);
+            _presenter = new PlayerPres(this);
             Cursor.lockState = CursorLockMode.Locked;
         }
 

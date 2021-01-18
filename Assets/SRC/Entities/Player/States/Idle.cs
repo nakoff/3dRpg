@@ -2,7 +2,7 @@ using Game;
 using UnityEngine;
 using Datas;
 
-namespace Entities.PlayerState
+namespace Entities.Player
 {
 
     public class StateIdle:IFSMState
@@ -33,7 +33,7 @@ namespace Entities.PlayerState
 
         public void OnEnter()
         {
-            _fsm.ChangeAnimation(PlayerConst.ANIMATION.IDLE);
+            _fsm.ChangeAnimation(Const.ANIMATION.IDLE);
         }
 
         public void OnExit()

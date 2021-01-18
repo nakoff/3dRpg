@@ -3,9 +3,9 @@ using Datas;
 using Game;
 using UnityEngine;
 
-namespace Entities
+namespace Entities.Player
 {
-    public class Player: BaseEntity
+    public class PlayerPres: BaseEntity
     {
         private IPlayerView _view;
         // private IAnimatedView _playerAnim;
@@ -16,7 +16,7 @@ namespace Entities
         private PlayerFSM _fsm;
 
 
-        public Player(IPlayerView view):base(ENTITY_TYPE.PLAYER)
+        public PlayerPres(IPlayerView view):base(ENTITY_TYPE.PLAYER)
         {
             _character = CharacterModel.Create(Type, Id);
             _character.MoveSpeed = 100;
@@ -33,24 +33,24 @@ namespace Entities
             _animState = AnimStateModel.Create(Type, Id);
             _animController = _view.CreateAnimController(_animState.obj);
 
-            AddAnimation(PlayerConst.ANIMATION.IDLE, "Standing Idle");
-            AddAnimation(PlayerConst.ANIMATION.WALK_FW, "Standing Walk Forward");
-            AddAnimation(PlayerConst.ANIMATION.WALK_BW, "Standing Walk Back");
-            AddAnimation(PlayerConst.ANIMATION.WALK_LEFT, "Standing Walk Left");
-            AddAnimation(PlayerConst.ANIMATION.WALK_RIGHT, "Standing Walk Right");
-            AddAnimation(PlayerConst.ANIMATION.RUN_FW, "Standing Run Forward");
-            AddAnimation(PlayerConst.ANIMATION.RUN_BW, "Standing Run Back");
-            AddAnimation(PlayerConst.ANIMATION.RUN_LEFT, "Standing Run Left");
-            AddAnimation(PlayerConst.ANIMATION.RUN_RIGHT, "Standing Run Right");
-            AddAnimation(PlayerConst.ANIMATION.ATTACK_FIREBALL_BIG, "Standing 1H Magic Attack 01");
-            AddAnimation(PlayerConst.ANIMATION.ATTACK_FIREBALL_SMALL, "Standing 2H Magic Attack 01");
-            AddAnimation(PlayerConst.ANIMATION.ATTACK_SPELL_GROUND, "Standing 2H Cast Spell 01");
+            AddAnimation(Const.ANIMATION.IDLE, "Standing Idle");
+            AddAnimation(Const.ANIMATION.WALK_FW, "Standing Walk Forward");
+            AddAnimation(Const.ANIMATION.WALK_BW, "Standing Walk Back");
+            AddAnimation(Const.ANIMATION.WALK_LEFT, "Standing Walk Left");
+            AddAnimation(Const.ANIMATION.WALK_RIGHT, "Standing Walk Right");
+            AddAnimation(Const.ANIMATION.RUN_FW, "Standing Run Forward");
+            AddAnimation(Const.ANIMATION.RUN_BW, "Standing Run Back");
+            AddAnimation(Const.ANIMATION.RUN_LEFT, "Standing Run Left");
+            AddAnimation(Const.ANIMATION.RUN_RIGHT, "Standing Run Right");
+            AddAnimation(Const.ANIMATION.ATTACK_FIREBALL_BIG, "Standing 1H Magic Attack 01");
+            AddAnimation(Const.ANIMATION.ATTACK_FIREBALL_SMALL, "Standing 2H Magic Attack 01");
+            AddAnimation(Const.ANIMATION.ATTACK_SPELL_GROUND, "Standing 2H Cast Spell 01");
 
             _fsm = new PlayerFSM(this, _animState.obj, _character.obj);
             
         }
 
-        private void AddAnimation(PlayerConst.ANIMATION key, string animation)
+        private void AddAnimation(Const.ANIMATION key, string animation)
         {
             var success = _animController.AddAnimation((int)key, animation);
             if (!success)

@@ -3,7 +3,7 @@ using Game;
 using Datas;
 using UnityEngine;
 
-namespace Entities.PlayerState
+namespace Entities.Player
 {
 
     public class StateMovement:IFSMState
@@ -13,7 +13,7 @@ namespace Entities.PlayerState
         public int Priority { get; }
 
         private PlayerFSM _fsm;
-        private PlayerConst.ANIMATION _curAnim;
+        private Const.ANIMATION _curAnim;
         private Datas.CharacterModel _character;
 
         public StateMovement(string name, PlayerFSM fsm, int priority)
@@ -64,21 +64,21 @@ namespace Entities.PlayerState
         private void Walk(float moveX, float moveZ)
         {
             if (moveZ != 0)
-                _curAnim = moveZ >0 ? PlayerConst.ANIMATION.WALK_FW : PlayerConst.ANIMATION.WALK_BW;
+                _curAnim = moveZ >0 ? Const.ANIMATION.WALK_FW : Const.ANIMATION.WALK_BW;
             else if (moveX != 0)
-                _curAnim = moveX >0 ? PlayerConst.ANIMATION.WALK_RIGHT: PlayerConst.ANIMATION.WALK_LEFT;
+                _curAnim = moveX >0 ? Const.ANIMATION.WALK_RIGHT: Const.ANIMATION.WALK_LEFT;
 
-            _character.MoveSpeed = PlayerConst.WalkSpeed;
+            _character.MoveSpeed = Const.WalkSpeed;
         }
 
         private void Run(float moveX, float moveZ)
         {
             if (moveZ != 0)
-                _curAnim = moveZ >0 ? PlayerConst.ANIMATION.RUN_FW : PlayerConst.ANIMATION.RUN_BW;
+                _curAnim = moveZ >0 ? Const.ANIMATION.RUN_FW : Const.ANIMATION.RUN_BW;
             else if (moveX != 0)
-                _curAnim = moveX >0 ? PlayerConst.ANIMATION.RUN_RIGHT: PlayerConst.ANIMATION.RUN_LEFT;
+                _curAnim = moveX >0 ? Const.ANIMATION.RUN_RIGHT: Const.ANIMATION.RUN_LEFT;
 
-            _character.MoveSpeed = PlayerConst.RunSpeed;
+            _character.MoveSpeed = Const.RunSpeed;
         }
 
 

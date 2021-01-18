@@ -19,7 +19,7 @@ namespace Entities
         {
             [ENTITY_TYPE.PLAYER] = pref => 
             {
-                var view = EntityManager.CreateView<IPlayerView>("Prefabs/Player");   
+                var view = EntityManager.CreateView<Player.IPlayerView>("Prefabs/Player");   
                 // var pres = new Player(view); 
             }
         };

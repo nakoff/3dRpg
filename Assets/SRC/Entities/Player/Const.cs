@@ -1,9 +1,9 @@
 
 
-namespace Entities
+namespace Entities.Player
 {
 
-    public static class PlayerConst
+    public static class Const
     {
         public enum ANIMATION { 
             IDLE, WALK_FW, WALK_BW, WALK_LEFT, WALK_RIGHT, 
