@@ -89,6 +89,7 @@ namespace Entities.PlayerState
             if (_fsm.CurAnimation == _curAnim)
             {
                 _isAnimationPlaying = false;
+                _fsm.ChangeAnimation(PlayerConst.ANIMATION.IDLE);
                 Logger.Print("Attack Finished");
             }
         }
