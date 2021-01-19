@@ -10,7 +10,7 @@ namespace Entities.Player
         public int Priority { get; }
 
         private PlayerFSM _fsm;
-        private Datas.CharacterModel _character;
+        private Models.CharacterModel _character;
         private Const.ANIMATION _curAnim;
         private bool _isAnimationPlaying;
 
@@ -20,7 +20,7 @@ namespace Entities.Player
             _fsm = fsm;
             Priority = priotity;
 
-            _character = new Datas.CharacterModel(_fsm.charObj);
+            _character = new Models.CharacterModel(_fsm.charObj);
         }
 
         public bool CanEnter()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace Datas
+namespace Models
 {
     public class InputSettingsModel:BaseModel<InputSettingsModel, InputSettingsObject>
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Datas
+namespace Models
 {
 
     public abstract class BaseModel <TModel,TObject> 
@@ -13,7 +13,7 @@ namespace Datas
         public static TModel Create(OBJECT_TYPE type, Entities.ENTITY_TYPE parentType, uint parentId) 
         {
             var obj = (TObject)Activator.CreateInstance(typeof(TObject),(int)type, (int)parentType, parentId);
-            DataManager.AddObject(obj);
+            ObjectManager.AddObject(obj);
 
             var model = (TModel)Activator.CreateInstance(typeof(TModel), (TObject)obj);            
             return model; 
@@ -22,7 +22,7 @@ namespace Datas
         public static TModel Get(OBJECT_TYPE type, uint id) 
         {
             TModel model = default(TModel);
-            (var err,var obj) = DataManager.GetObject((int)type, id);
+            (var err,var obj) = ObjectManager.GetObject((int)type, id);
             if (obj == null) { Logger.Error(err); }
             else { model = (TModel)Activator.CreateInstance(typeof(TModel), obj); }
 
@@ -32,7 +32,7 @@ namespace Datas
         public static List<TModel> GetAll(OBJECT_TYPE type)
         {
             var list = new List<TModel>();
-            foreach (var obj in DataManager.GetObjects((int)type))
+            foreach (var obj in ObjectManager.GetObjects((int)type))
             {
                 var model = (TModel)Activator.CreateInstance(typeof(TModel), obj);
                 list.Add(model);
@@ -44,7 +44,7 @@ namespace Datas
         public static TModel GetByParent(OBJECT_TYPE type, int parentType, uint parentId)
         {
             TModel model = null;
-            var objects = DataManager.GetObjects((int)type);
+            var objects = ObjectManager.GetObjects((int)type);
             // objects =  (from obj in objects where obj.ParentType == parentType && obj.ParentId == parentId select obj).ToList();
             foreach (var obj in objects)
             {

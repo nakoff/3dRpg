@@ -1,6 +1,6 @@
 using Game;
 using UnityEngine;
-using Datas;
+using Models;
 
 namespace Entities.Player
 {

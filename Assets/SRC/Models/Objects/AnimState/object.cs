@@ -1,7 +1,7 @@
 
-namespace Datas
+namespace Models
 {
-    public class InputSettingsObject: IObject
+    public class AnimStateObject: IObject
     {
         public event System.Action<int> update = delegate{};
         public void EmitEvent(int change) 
@@ -9,10 +9,10 @@ namespace Datas
             update(change); 
         }
 
-        public InputSettingsObject(int type, int parentType, uint parentId) 
+        public AnimStateObject(int type, int parentType, uint parentId) 
         {
             Type = type;
-            Id = DataManager.IdIncrement;
+            Id = ObjectManager.IdIncrement;
             ParentType = parentType;
             ParentId = parentId;
         }
@@ -22,6 +22,9 @@ namespace Datas
         public int ParentType { get; private set; }
         public uint ParentId { get; private set; }
 
-        public int mouseSens = 100;
+        public int curAnim;
+        public int prevAnim;
+        public int action;
+        public bool isPlaying;
     }
 }

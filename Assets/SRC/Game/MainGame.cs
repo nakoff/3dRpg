@@ -15,7 +15,7 @@ namespace Game
 			inputManager = gameObject.AddComponent<InputManager>();
 			entityManager = gameObject.AddComponent<EntityManager>();
 
-			var setting = Datas.InputSettingsModel.Create();
+			var setting = Models.InputSettingsModel.Create();
 			setting.MouseSens = 150;
 		}
 

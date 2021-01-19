@@ -1,5 +1,5 @@
 
-namespace Datas
+namespace Models
 {
     public class CharacterObject: IObject
     {
@@ -12,7 +12,7 @@ namespace Datas
         public CharacterObject(int type, int parentType, uint parentId)
         {
             Type = type;
-            Id = DataManager.IdIncrement;
+            Id = ObjectManager.IdIncrement;
             ParentType = parentType;
             ParentId = parentId;
         }

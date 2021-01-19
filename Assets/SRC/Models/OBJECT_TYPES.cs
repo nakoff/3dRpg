@@ -1,5 +1,5 @@
 
-namespace Datas
+namespace Models
 {
     public enum OBJECT_TYPE { CHARACTER, PLAYER_CAMERA, SETTINGS, ANIM_STATE, INTERACT_STATE, }
 }

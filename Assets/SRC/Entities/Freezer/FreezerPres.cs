@@ -1,4 +1,4 @@
-using Datas;
+using Models;
 
 namespace Entities.Freezer
 {

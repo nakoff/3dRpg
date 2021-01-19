@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Datas
+namespace Models
 {
     public class CharacterModel:BaseModel<CharacterModel, CharacterObject>
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Datas
+namespace Models
 {
     public interface IObject
     {
@@ -12,7 +12,7 @@ namespace Datas
         uint ParentId { get; }
     }
 
-    public static class DataManager
+    public static class ObjectManager
     {
         private static Dictionary<int, Dictionary<uint,IObject>> _db = new Dictionary<int, Dictionary<uint, IObject>>();
         public static uint IdIncrement { get; private set; } = 1;

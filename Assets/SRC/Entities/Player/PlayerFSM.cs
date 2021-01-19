@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Entities.Player;
 using UnityEngine;
 using Game;
-using Datas;
+using Models;
 
 namespace Entities.Player
 {

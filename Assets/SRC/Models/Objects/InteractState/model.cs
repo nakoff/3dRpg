@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Entities;
 
-namespace Datas
+namespace Models
 {
     public class InteractStateModel:BaseModel<InteractStateModel, InteractStateObject>
     {

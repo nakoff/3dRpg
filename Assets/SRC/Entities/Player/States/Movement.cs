@@ -1,6 +1,6 @@
 
 using Game;
-using Datas;
+using Models;
 using UnityEngine;
 
 namespace Entities.Player
@@ -14,7 +14,7 @@ namespace Entities.Player
 
         private PlayerFSM _fsm;
         private Const.ANIMATION _curAnim;
-        private Datas.CharacterModel _character;
+        private Models.CharacterModel _character;
 
         public StateMovement(string name, PlayerFSM fsm, int priority)
         {
