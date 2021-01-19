@@ -1,0 +1,10 @@
+{
+    "modifiers": [
+        {
+            "id": "MoveSpeed",
+            "value": 1,
+            "value_pct": 100,
+            "ttl": 5
+        }
+    ]
+}
