@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Entities
 {
-    public enum ANIMATION_EVENT { TEST }
+    public enum ANIMATION_EVENT { PLAYER_FIREBALL_BIG }
 
     [RequireComponent(typeof(Animator))]
     public class MB_AnimationView:MonoBehaviour

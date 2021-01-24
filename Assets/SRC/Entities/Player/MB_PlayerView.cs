@@ -8,6 +8,8 @@ namespace Entities.Player
     {
         enum CHANGED { POSITION, };
         Vector3 Position { get; set; }
+        Vector3 FistPosition { get; }
+
         void Subscribe(System.Action<CHANGED> listener);
         void Movement(Vector2 vector2, int moveSpeed, float dt);
         void Rotate(Vector2 rotation, float dt);
@@ -25,6 +27,7 @@ namespace Entities.Player
         public ENTITY_TYPE EntityType => _presenter.Type;
         public uint EntityId => _presenter.Id;
         public InteractController interactController { get; set; }
+        public Vector3 FistPosition => _fistPiv.position;
 
         public Vector3 Position 
         {

@@ -17,19 +17,7 @@ namespace Entities
         {
             _animator = animator;
             _animState = new AnimStateModel(obj);
-            _animState.Subscribe(change =>
-            {
-                switch ((AnimStateModel.CHANGE)change)
-                {
-                    case AnimStateModel.CHANGE.CUR_ANIMATION:
-                        ChangeAnimation(_animState.CurAnimation);
-                        break;
-
-                    case AnimStateModel.CHANGE.ACTION:
-                        Logger.Print("ANIM_ACTION"+_animState.Action.ToString());
-                        break;
-                }
-            });
+            _animState.Subscribe(OnAnimStateChanged);
 
         }
 
@@ -75,9 +63,28 @@ namespace Entities
             } 
         }
 
+        public void OnDelete()
+        {
+            _animState.UnSubscribes();
+        }
+
         public void Action(int action) 
         {
             _animState._AnimationAction(action);
+        }
+
+        private void OnAnimStateChanged(int change)
+        {
+            switch ((AnimStateModel.CHANGE)change)
+            {
+                case AnimStateModel.CHANGE.CUR_ANIMATION:
+                    ChangeAnimation(_animState.CurAnimation);
+                    break;
+
+                case AnimStateModel.CHANGE.ACTION:
+                    Logger.Print("ANIM_ACTION"+_animState.Action.ToString());
+                    break;
+            }
         }
     }
 }

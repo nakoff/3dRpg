@@ -4,5 +4,6 @@ namespace Entities
     {
         PLAYER,
         FREEZER,
+        SPELL_FIREBALL_BIG,
     }
 }

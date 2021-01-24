@@ -31,6 +31,7 @@ namespace Entities.Player
             _view.Subscribe(OnViewChanged);
 
             _animState = AnimStateModel.Create(Type, Id);
+            _animState.Subscribe(OnAnimStateChanged);
             _animController = _view.CreateAnimController(_animState.obj);
 
             AddAnimation(Const.ANIMATION.IDLE, "Standing Idle");
@@ -82,6 +83,16 @@ namespace Entities.Player
             }
         }
 
+        private void OnAnimStateChanged(int change) 
+        {
+            switch ((AnimStateModel.CHANGE)change)
+            {
+                case AnimStateModel.CHANGE.ACTION:
+                    CheckoutAnimAction(_animState.Action);
+                    break;
+            }
+        }
+
         public override void OnUpdate(float dt)
         {
             _view.Movement(new Vector2(_character.Moving.x, _character.Moving.z), _character.MoveSpeed, dt);
@@ -91,11 +102,22 @@ namespace Entities.Player
             _animController.Update(dt);
         }
 
+        private void CheckoutAnimAction(int action) 
+        {
+            var a = (ANIMATION_EVENT)action;
+            if (a == ANIMATION_EVENT.PLAYER_FIREBALL_BIG)
+            {
+                EntityFactory.CreateFireball(_view.FistPosition, Type, Id);
+            }
+        }
+
 
         public override void OnDelete()
         {
             _character.UnSubscribes();
+            _animState.UnSubscribes();
             _fsm.OnDelete();
+            _animController.OnDelete();
         }
     }
 }
