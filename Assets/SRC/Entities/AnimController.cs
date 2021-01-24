@@ -24,6 +24,10 @@ namespace Entities
                     case AnimStateModel.CHANGE.CUR_ANIMATION:
                         ChangeAnimation(_animState.CurAnimation);
                         break;
+
+                    case AnimStateModel.CHANGE.ACTION:
+                        Logger.Print("ANIM_ACTION"+_animState.Action.ToString());
+                        break;
                 }
             });
 
@@ -69,6 +73,11 @@ namespace Entities
                     _animState._AnimationFinished();
                 }
             } 
+        }
+
+        public void Action(int action) 
+        {
+            _animState._AnimationAction(action);
         }
     }
 }

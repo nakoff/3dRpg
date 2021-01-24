@@ -18,7 +18,7 @@ namespace Entities.Player
     [RequireComponent(typeof(Rigidbody))]
     public class MB_PlayerView: MonoBehaviour, IPlayerView
     {
-        [SerializeField] private Animator _animator;
+        [SerializeField] private MB_AnimationView _animView;
         [SerializeField] private Transform _camPiv;
         [SerializeField] private Transform _fistPiv;
 
@@ -48,7 +48,9 @@ namespace Entities.Player
 
         public AnimController CreateAnimController(AnimStateObject obj)
         {
-            return new AnimController(_animator, obj);
+            var animController = new AnimController(_animView.animator, obj);
+            _animView.Init(animController);
+            return animController;
         }
 
 

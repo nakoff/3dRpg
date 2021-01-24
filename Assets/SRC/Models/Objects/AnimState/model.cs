@@ -36,7 +36,7 @@ namespace Models
         public int Action
         {
             get => obj.action;
-            set
+            private set
             {
                 obj.action = value;
                 obj.EmitEvent((int)CHANGE.ACTION);
@@ -48,8 +48,6 @@ namespace Models
             get => obj.isPlaying;
             private set
             {
-                if (IsPlaying == value)
-                    return;
                 obj.isPlaying = value;
                 obj.EmitEvent((int)CHANGE.IS_PLAYING);
             }
@@ -57,6 +55,7 @@ namespace Models
 
         public void _AnimationStart() => IsPlaying = true;
         public void _AnimationFinished() => IsPlaying = false;
+        public void _AnimationAction(int action) => Action = action;
 
     }
 }
