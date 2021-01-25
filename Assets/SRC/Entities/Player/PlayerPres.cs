@@ -1,16 +1,15 @@
 using System;
 using Models;
-using Game;
 using UnityEngine;
 
 namespace Entities.Player
 {
     public class PlayerPres: BaseEntity
     {
+        public Vector3 FistPosition => _view.FistPosition;
+
         private IPlayerView _view;
-        // private IAnimatedView _playerAnim;
         private CharacterModel _character;
-        private InputSettingsModel _inputSetting;
         private AnimStateModel _animState;
         private AnimController _animController;
         private PlayerFSM _fsm;
@@ -20,7 +19,6 @@ namespace Entities.Player
         {
             _character = CharacterModel.Create(Type, Id);
             _character.MoveSpeed = 100;
-            _character.Subscribe(OnCharacterChanged);
 
             var collState = InteractStateModel.Create(Type, Id);
             var interactController = new InteractController(collState.obj);
@@ -31,7 +29,6 @@ namespace Entities.Player
             _view.Subscribe(OnViewChanged);
 
             _animState = AnimStateModel.Create(Type, Id);
-            _animState.Subscribe(OnAnimStateChanged);
             _animController = _view.CreateAnimController(_animState.obj);
 
             AddAnimation(Const.ANIMATION.IDLE, "Standing Idle");
@@ -70,29 +67,6 @@ namespace Entities.Player
         }
 
 
-        private void OnCharacterChanged(int change)
-        {
-            switch ((CharacterModel.CHANGE)change)
-            {
-                case CharacterModel.CHANGE.POSITION:
-                    break;
-
-                case CharacterModel.CHANGE.HEALTH:
-                    break;
-                
-            }
-        }
-
-        private void OnAnimStateChanged(int change) 
-        {
-            switch ((AnimStateModel.CHANGE)change)
-            {
-                case AnimStateModel.CHANGE.ACTION:
-                    CheckoutAnimAction(_animState.Action);
-                    break;
-            }
-        }
-
         public override void OnUpdate(float dt)
         {
             _view.Movement(new Vector2(_character.Moving.x, _character.Moving.z), _character.MoveSpeed, dt);
@@ -100,22 +74,11 @@ namespace Entities.Player
 
             _fsm.Update(dt);
             _animController.Update(dt);
-        }
 
-        private void CheckoutAnimAction(int action) 
-        {
-            var a = (ANIMATION_EVENT)action;
-            if (a == ANIMATION_EVENT.PLAYER_FIREBALL_BIG)
-            {
-                EntityFactory.CreateFireball(_view.FistPosition, Type, Id);
-            }
         }
-
 
         public override void OnDelete()
         {
-            _character.UnSubscribes();
-            _animState.UnSubscribes();
             _fsm.OnDelete();
             _animController.OnDelete();
         }

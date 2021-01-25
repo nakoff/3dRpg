@@ -66,5 +66,10 @@ namespace Entities
                 }
             }
         }
+
+        public virtual void OnDelete() 
+        {
+            _curState.OnExit();
+        }
     }
 }

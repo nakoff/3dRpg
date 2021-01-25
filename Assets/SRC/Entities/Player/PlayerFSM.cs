@@ -30,16 +30,7 @@ namespace Entities.Player
             _playerRotation = _character.Rotation;
 
             _animState = new AnimStateModel(animObj);
-            _animState.Subscribe(change =>
-            {
-                switch ((AnimStateModel.CHANGE)change)
-                {
-                    case AnimStateModel.CHANGE.IS_PLAYING:
-                        if (!_animState.IsPlaying)
-                            OnAnimationFinished();
-                        break;
-                }
-            });
+            _animState.Subscribe(OnAnimStateChanged);
 
             _inputSetting = InputSettingsModel.Get();
             if (_inputSetting == null)
@@ -73,11 +64,23 @@ namespace Entities.Player
             _character.Rotation = _playerRotation;
         }
 
+        private void OnAnimStateChanged(int change)
+        {
+            switch ((AnimStateModel.CHANGE)change)
+            {
+                case AnimStateModel.CHANGE.IS_PLAYING:
+                    if (!_animState.IsPlaying)
+                        OnAnimationFinished();
+                    break;
+            }
+        }
+
         private void OnAnimationFinished() => animationFinished(); 
 
 
-        public void OnDelete()
+        public override void OnDelete()
         {
+            base.OnDelete();
             _animState.UnSubscribes();
         }
 
